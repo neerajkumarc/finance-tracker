@@ -57,7 +57,7 @@ const Transactions = ({ transactions }: Props) => {
         <h2 className="text-base text-muted-foreground">transactions</h2>
       </div>
       <ScrollArea className="h-[300px]">
-        <div className="divide-y divide-gray-700">
+        <div className="divide-y divide-gray-100">
           {isAdding && (
             <div className="p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -67,9 +67,10 @@ const Transactions = ({ transactions }: Props) => {
           </div>
           )}
           {transactions.map(transaction => (
-            <ContextMenu key={transaction.id}>
+            <div key={transaction.id}>
+            <ContextMenu>
               <ContextMenuTrigger>
-                <div className="p-4 flex items-center justify-between">
+                <div className="p-4 flex items-center justify-between ">
                   <div className="flex items-center gap-3">
                     <span>{transaction.description}</span>
                   </div>
@@ -87,6 +88,7 @@ const Transactions = ({ transactions }: Props) => {
                 </ContextMenuItem>
               </ContextMenuContent>
             </ContextMenu>
+            </div>
           ))}
           {transactions.length === 0 && (
             <div className="p-4 text-center text-gray-500">No transactions yet</div>
