@@ -3,11 +3,12 @@ import ForgotPassword from "./ForgotPassword";
 export default function ForgotPasswordPage() {
   return (
     <>
-      <div className="w-full flex mt-20 justify-center">
-        <section className="flex flex-col w-[400px]">
-          <h1 className="text-3xl w-full text-center font-bold mb-6">
-            Forgot Password
+      <div className="w-full flex justify-between items-center h-full">
+      <section className="flex flex-col w-[400px] px-8">
+      <h1 className="text-6xl w-full text-center font-bold mb-2">
+            mift
           </h1>
+          <p className="text-center">forgot password?</p>
           <ForgotPassword />
         </section>
       </div>

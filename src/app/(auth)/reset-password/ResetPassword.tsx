@@ -26,10 +26,7 @@ const ResetPassword = () => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-200">
-            New Password
-          </label>
+        <div className="mt-4">
           <input
             type="password"
             placeholder="Password"

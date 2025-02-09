@@ -4,8 +4,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <>
-      <div className="w-full flex mt-20 justify-center">
+      <div className="w-full flex justify-between items-center h-full">
         <section className="flex flex-col w-[400px] px-8">
           <h1 className="text-6xl w-full text-center font-bold mb-2">
             mift
@@ -27,6 +26,5 @@ export default function LoginPage() {
           </div>
         </section>
       </div>
-    </>
   );
 }
