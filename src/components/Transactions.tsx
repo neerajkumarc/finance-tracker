@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { Transaction } from '@/types'
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Button } from './ui/button'
 import { deleteTransaction, editTransaction } from '@/utils/supabase/queries'
 import {
   ContextMenu,
@@ -10,15 +9,6 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,8 +19,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Skeleton } from './ui/skeleton';
 import { useAddingStore } from '@/store/useAddingStore';
 
