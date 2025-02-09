@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useAddingStore } from "@/store/useAddingStore";
 import { addTransaction } from "@/utils/supabase/queries";
 import { Mic, MicOff } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -7,6 +8,8 @@ import React, { useEffect, useState } from "react";
 const AddDataWithMic = ({user}: any) => {
   const [isListening, setIsListening] = useState<boolean>(false);
   const [transcript, setTranscript] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
+  const { setIsAdding } = useAddingStore();
 
   useEffect(() => {
     if ("webkitSpeechRecognition" in window) {
@@ -42,6 +45,8 @@ const AddDataWithMic = ({user}: any) => {
 
   const processVoiceInput = async (text: string) => {
     try {
+      setIsAdding(true);
+      
       const systemPrompt = `You are a financial assistant. Parse the following text and return a JSON object with these fields:
         - type: either "expense" or "income"
         - amount: a number (parse any mentioned amount)
@@ -59,7 +64,6 @@ const AddDataWithMic = ({user}: any) => {
             { role: "system", content: systemPrompt },
             { role: "user", content: text },
           ],
-          model: "openai",
           jsonMode: true,
           private: true,
         }),
@@ -71,14 +75,20 @@ const AddDataWithMic = ({user}: any) => {
 
       const data: any = await response.json();
 
+    if(data.amount==0){
+      setError(true);
+    }else{
       const transaction: any = {
         user_id: user.id,
         type: data.type,
         amount: data.amount,
         description: data.description,
       }
-
+  
      await addTransaction(transaction);
+    }
+    setIsAdding(false);
+
     
     } catch (error) {
       console.error("Error processing voice input:", error);
@@ -90,7 +100,7 @@ const AddDataWithMic = ({user}: any) => {
        <Button
         size="icon"
         onClick={toggleListening}
-        className={`rounded-full w-14 h-14 ${
+        className={`rounded-full w-14 h-14 ${error && "animate-shake"} ${
           isListening 
             ? 'bg-red-500 hover:bg-red-600' 
             : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700'

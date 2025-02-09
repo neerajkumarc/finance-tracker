@@ -31,6 +31,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Skeleton } from './ui/skeleton';
+import { useAddingStore } from '@/store/useAddingStore';
 
 type Props = {
   transactions: Transaction[]
@@ -39,6 +41,8 @@ type Props = {
 const Transactions = ({ transactions }: Props) => {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+
+  const { isAdding } = useAddingStore()
 
   const handleDelete = async () => {
     if (selectedTransaction) {
@@ -54,6 +58,14 @@ const Transactions = ({ transactions }: Props) => {
       </div>
       <ScrollArea className="h-[300px]">
         <div className="divide-y divide-gray-700">
+          {isAdding && (
+            <div className="p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+            <Skeleton className="h-4 w-[100px]" />
+          </div>
+          )}
           {transactions.map(transaction => (
             <ContextMenu key={transaction.id}>
               <ContextMenuTrigger>
