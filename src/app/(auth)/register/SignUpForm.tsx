@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import AuthButton from "@/components/AuthButton";
-import { useRouter } from "next/navigation";
 import { signup } from "@/actions/auth";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { CheckCircle } from "lucide-react";
 
 const SignUpForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
+  const [showEmailConfirmationMsg, setShowEmailConfirmationMsg] = useState<boolean>(false)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -15,7 +16,7 @@ const SignUpForm = () => {
     const formdata = new FormData(event.currentTarget);
     const result = await signup(formdata);
     if(result.status === "success") {
-      router.push("/login");
+      setShowEmailConfirmationMsg(true)
     }else{
       setError(result.status);
     }
@@ -57,7 +58,17 @@ const SignUpForm = () => {
         </div>
         {error && <p className="text-red-500">{error}</p>}
       </form>
-    </div>
+      {showEmailConfirmationMsg && (
+       <Alert className="mt-4 text-xs">
+       <CheckCircle className="h-4 w-4" />
+       <AlertTitle>Registration Successful!</AlertTitle>
+       <AlertDescription className="space-y-2 text-xs">
+         <p>Your account has been successfully created.</p>
+         <p>We've sent a confirmation email to your address. Please click the link in the email to verify your account.</p>
+       </AlertDescription>
+     </Alert>
+    )}
+    </div>  
   );
 };
 
