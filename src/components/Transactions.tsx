@@ -49,7 +49,7 @@ const Transactions = ({ transactions }: Props) => {
           {isAdding && (
             <div className="p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Skeleton className="h-4 w-[200px]" />
+              <Skeleton className="h-4 w-[160px] " />
             </div>
             <Skeleton className="h-4 w-[100px]" />
           </div>

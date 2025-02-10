@@ -34,7 +34,7 @@ const dashboard = async () => {
 
   const { balance, expenses, income } = calculateTotals();
   return (
-    <div className="pt-4 px-2 space-y-4 h-[calc(100vh-40px)] relative">
+    <div className="pt-4 px-2 space-y-4 h-full relative md:p-4 md:py-8">
       <div className="flex items-center justify-between">
         <h1 className="lowercase text-2xl font-medium">
           hello,<span className=""> {user?.user_metadata.username || user?.user_metadata.full_name}</span>
@@ -43,7 +43,7 @@ const dashboard = async () => {
       </div>
       <Metrics balance={balance} expenses={expenses} income={income} />
       <Transactions transactions={transactions} />
-      <div className=" absolute right-0 bottom-0">
+      <div className=" absolute right-0 md:right-4 md:bottom-4 bottom-0">
       <AddDataWithMic user={user}/>
       </div>
     </div>

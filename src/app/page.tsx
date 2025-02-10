@@ -8,7 +8,7 @@ const {user} = await getUserSession();
     redirect("/dashboard");
   }
   return (
-    <main className="flex flex-col gap-2 items-center justify-center p-4 min-h-screen overflow-hidden">
+    <main className="flex flex-col gap-2 items-center justify-center p-4 h-full overflow-hidden">
       <div className="relative w-full max-w-md aspect-square">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <img
@@ -45,7 +45,7 @@ const {user} = await getUserSession();
         <p>your minimal finance tracker app</p>
       </div>
       <div className="mt-8 w-full">
-        <button className="w-full bg-stone-900 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded-full"><Link href="/dashboard">Get Started</Link></button>
+        <Link href="/dashboard"><button className="w-full bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-full">Get Started</button></Link>
       </div>
     </main>
   );
