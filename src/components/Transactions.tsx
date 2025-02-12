@@ -45,7 +45,7 @@ const Transactions = ({ transactions }: Props) => {
         <h2 className="text-base text-muted-foreground">transactions</h2>
       </div>
       <ScrollArea className="h-[300px]">
-        <div className="divide-y divide-gray-100">
+        <div className={`${transactions.length !=0 && "divide-y divide-gray-100"}`}>
           {isAdding && (
             <div className="p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -79,7 +79,10 @@ const Transactions = ({ transactions }: Props) => {
             </div>
           ))}
           {transactions.length === 0 && (
+            <div className='flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-20 w-full'>
             <div className="p-4 text-center text-gray-500">No transactions yet</div>
+            <p className='text-muted-foreground text-xs text-center'>Click the mic button to add a transaction <br/> eg: "🗣️ spent ₹500 on groceries"</p>
+            </div>
           )}
         </div>
       </ScrollArea>
