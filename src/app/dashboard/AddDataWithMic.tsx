@@ -5,11 +5,7 @@ import { addTransaction } from "@/utils/supabase/queries";
 import { Mic, MicOff } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
 
-interface VoiceInputProps {
-  user: {
-    id: string;
-  };
-}
+
 
 interface TransactionData {
   type: "expense" | "income";
@@ -17,7 +13,7 @@ interface TransactionData {
   description: string;
 }
 
-const AddDataWithMic = ({ user }: VoiceInputProps) => {
+const AddDataWithMic = ({ user }: any) => {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
   const [isProcessing, setIsProcessing] = useState(false);
