@@ -16,12 +16,8 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-mono antialiased">
         <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 p-4">
-          {/* Mobile-first view (shows on all screens) */}
-          <div className="block md:hidden w-full max-w-sm">
-            <div className="mx-auto p-2 h-full flex flex-col overflow-y-auto no-scrollbar">
-              <div className="flex-grow">{children}</div>
-            </div>
-          </div>
+          {/* Mobile-first view (shows on all screens)*/}
+          <div className="w-full md:hidden">{children}</div>
 
           {/* Desktop view with phone mockup (hidden on mobile) */}
           <div className="hidden md:block">
@@ -31,9 +27,7 @@ export default function RootLayout({
               <div className="h-[46px] w-[3px] bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
               <div className="h-[64px] w-[3px] bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
               <div className="rounded-[2rem] overflow-hidden w-[332px] h-[712px] bg-white dark:bg-gray-800">
-                <div className="h-full w-full overflow-y-auto no-scrollbar">
-                  {children}
-                </div>
+                <div className="w-full">{children}</div>
               </div>
             </div>
           </div>
@@ -41,4 +35,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-};
+}
