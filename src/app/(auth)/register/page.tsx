@@ -5,7 +5,7 @@ import React from "react";
 const SignUp = async () => {
   return (
     <div className="w-full flex justify-between items-center h-full">
-      <section className="flex flex-col w-[400px] px-8">
+      <section className="flex flex-col w-full px-8">
       <h1 className="text-6xl w-full text-center font-bold mb-2">
             mift
           </h1>
