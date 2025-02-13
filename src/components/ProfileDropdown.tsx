@@ -12,7 +12,7 @@ const ProfileDropdown = ({ user }: { user: any }) => {
     <DropdownMenuTrigger asChild>
       <Avatar className="h-12 w-12">
       <AvatarImage src={user?.user_metadata.avatar_url} />
-      <AvatarFallback>{user?.user_metadata.username.charAt(0) || user?.user_metadata.full_name.charAt(0)}</AvatarFallback>
+      <AvatarFallback>U</AvatarFallback>
         <span className="sr-only">Toggle user menu</span>
       </Avatar>
     </DropdownMenuTrigger>
