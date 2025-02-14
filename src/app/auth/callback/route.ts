@@ -17,20 +17,18 @@ export async function GET(request: Request) {
         console.error("Error getting user:", getUserError);
         return NextResponse.redirect(`${origin}/error`);
       }
-
       const { data: existingUser } = await supabase
         .from("user_profiles")
         .select("*")
         .eq("email", data?.user?.email)
         .limit(1)
         .single();
-
       if (!existingUser) {
         const { data: user, error: insertError } = await supabase
           .from("user_profiles")
           .insert({
             email: data?.user?.email,
-            username: data?.user?.email, //todo: fix this
+            fullname: data?.user?.user_metadata.full_name
           });
         if (insertError) {
           console.error("Error inserting user:", insertError);

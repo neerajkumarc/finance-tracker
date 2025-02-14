@@ -37,7 +37,7 @@ const dashboard = async () => {
     <div className="pt-4 px-2 space-y-4 h-full relative md:p-4 md:py-8">
       <div className="flex items-center justify-between">
         <h1 className="lowercase text-2xl font-medium">
-          hello,<span className=""> {user?.user_metadata.username || user?.user_metadata.full_name}</span>
+          hello,<span className=""> {user?.user_metadata.full_name.split(" ")[0]}</span>
         </h1>
         <ProfileDropdown user={user} />
       </div>

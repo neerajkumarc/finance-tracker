@@ -13,8 +13,8 @@ const Logout = () => {
   };
 
   return (
-    <div className=" flex items-center gap-2 bg-stone-900 text-white text-sm px-4 py-2 rounded-md cursor-pointer justify-center">
-      <form onSubmit={handleLogout}>
+    <div>
+      <form onSubmit={handleLogout} className=" flex items-center gap-2 bg-stone-900 text-white text-sm px-4 py-2 rounded-md cursor-pointer justify-center">
         <button type="submit" disabled={loading}>
           {loading ? "Signing out..." : "Sign out"}
         </button>
