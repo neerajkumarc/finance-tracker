@@ -5,7 +5,6 @@ import { Totals, Transaction } from "@/types";
 import { fetchTransactions } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server";
 import React from "react";
-import AddDataWithMic from "./AddDataWithMic";
 
 const dashboard = async () => {
   const supabase = await createClient();
@@ -34,18 +33,19 @@ const dashboard = async () => {
 
   const { balance, expenses, income } = calculateTotals();
   return (
-    <div className="pt-4 px-2 space-y-4 h-full relative md:p-4 md:py-8">
+    <div className="px-4 space-y-2">
       <div className="flex items-center justify-between">
         <h1 className="lowercase text-2xl font-medium">
-          hello,<span className=""> {user?.user_metadata.full_name.split(" ")[0]}</span>
+          hello,
+          <span className="">
+            {" "}
+            {user?.user_metadata.full_name.split(" ")[0]}
+          </span>
         </h1>
         <ProfileDropdown user={user} />
       </div>
       <Metrics balance={balance} expenses={expenses} income={income} />
       <Transactions transactions={transactions} />
-      <div className=" absolute right-0 md:right-4 md:bottom-4 bottom-0">
-      <AddDataWithMic/>
-      </div>
     </div>
   );
 };

@@ -135,7 +135,7 @@ const AddDataWithMic = () => {
         onClick={toggleListening}
         disabled={isProcessing}
         className={`
-          rounded-full w-14 h-14 transition-colors duration-200
+          rounded-full w-12 h-12 transition-colors duration-200
           ${
             isListening
               ? "bg-red-500 hover:bg-red-600"
