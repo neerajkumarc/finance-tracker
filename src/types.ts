@@ -4,8 +4,13 @@ export interface Transaction {
     type: 'expense' | 'income';
     amount: number;
     description: string;
-    date: string;
     created_at: string;
+  }
+
+  export interface TransactionData {
+    type: "expense" | "income";
+    amount: number;
+    description: string;
   }
   
   export interface Profile {

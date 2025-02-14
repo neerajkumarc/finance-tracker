@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { Transaction } from '@/types'
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { deleteTransaction, editTransaction } from '@/utils/supabase/queries'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -21,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Skeleton } from './ui/skeleton';
 import { useAddingStore } from '@/store/useAddingStore';
+import { deleteTransactionForCurrentUser } from '@/actions/transactions';
 
 type Props = {
   transactions: Transaction[]
@@ -34,7 +34,7 @@ const Transactions = ({ transactions }: Props) => {
 
   const handleDelete = async () => {
     if (selectedTransaction) {
-      await deleteTransaction(selectedTransaction)
+      await deleteTransactionForCurrentUser(selectedTransaction)
       setShowDeleteDialog(false)
     }
   }

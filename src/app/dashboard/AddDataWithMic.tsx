@@ -1,19 +1,12 @@
 "use client";
+import { addTransactionForCurrentUser } from "@/actions/transactions";
 import { Button } from "@/components/ui/button";
 import { useAddingStore } from "@/store/useAddingStore";
-import { addTransaction } from "@/utils/supabase/queries";
+import { TransactionData } from "@/types";
 import { Mic, MicOff } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
 
-
-
-interface TransactionData {
-  type: "expense" | "income";
-  amount: number;
-  description: string;
-}
-
-const AddDataWithMic = ({ user }: any) => {
+const AddDataWithMic = () => {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -96,14 +89,13 @@ const AddDataWithMic = ({ user }: any) => {
         return;
       }
 
-      const transaction: any = {
-        user_id: user.id,
+      const transaction: TransactionData = {
         type: data.type,
         amount: data.amount,
-        description: data.description,
+        description: data.description
       };
 
-      await addTransaction(transaction);
+      await addTransactionForCurrentUser(transaction);
     } catch (error) {
       console.error("Error processing voice input:", error);
       setShowShakeAnimation(true);

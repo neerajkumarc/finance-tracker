@@ -15,7 +15,7 @@ export async function fetchTransactions(userId: string) {
     return data as Transaction[];
  }
 
- export async function addTransaction({type, amount, description, user_id}: Omit<Transaction, 'id' | 'created_at'>) {
+ export async function addTransaction({type, amount, description, user_id}: Omit<Transaction, "id" | "created_at">) {
 const supabase = await createClient();
 const { data, error } = await supabase
   .from('transactions')

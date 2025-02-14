@@ -44,7 +44,7 @@ const dashboard = async () => {
       <Metrics balance={balance} expenses={expenses} income={income} />
       <Transactions transactions={transactions} />
       <div className=" absolute right-0 md:right-4 md:bottom-4 bottom-0">
-      <AddDataWithMic user={user}/>
+      <AddDataWithMic/>
       </div>
     </div>
   );
