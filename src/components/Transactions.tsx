@@ -81,7 +81,7 @@ const Transactions = ({ transactions }: Props) => {
           {transactions.length === 0 && (
             <div className='flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-20 w-full'>
             <div className="p-4 text-center text-gray-500">No transactions yet</div>
-            <p className='text-muted-foreground text-xs text-center'>Click the mic button to add a transaction <br/> eg: "🗣️ spent ₹500 on groceries"</p>
+            <p className='text-muted-foreground text-xs text-center'>Click the plus button to add a transaction </p>
             </div>
           )}
         </div>

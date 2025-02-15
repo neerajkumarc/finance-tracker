@@ -2,9 +2,9 @@
 import { addTransactionForCurrentUser } from "@/actions/transactions";
 import { Button } from "@/components/ui/button";
 import { useAddingStore } from "@/store/useAddingStore";
-import { TransactionData } from "@/types";
 import { Mic, MicOff } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
+import { processTransactionWithAI } from "@/utils/transactionAI";
 
 const AddDataWithMic = () => {
   const [isListening, setIsListening] = useState(false);
@@ -56,45 +56,7 @@ const AddDataWithMic = () => {
       setIsProcessing(true);
       setIsAdding(true);
 
-      const systemPrompt = `You are a financial assistant. Parse the following text and return a JSON object with these fields:
-        - type: either "expense" or "income"
-        - amount: a number (parse any mentioned amount)
-        - description: a brief description of the transaction starting with an emoji
-        Example input: "add expense for lunch 500 rupees"
-        Should return: {"type": "expense", "amount": 500, "description": "🍚 lunch"}`;
-
-      const response = await fetch("https://text.pollinations.ai/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: text },
-          ],
-          jsonMode: true,
-          private: true,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to process voice input");
-      }
-
-      const data: TransactionData = await response.json();
-
-      if (data.amount === 0) {
-        setShowShakeAnimation(true);
-        return;
-      }
-
-      const transaction: TransactionData = {
-        type: data.type,
-        amount: data.amount,
-        description: data.description
-      };
-
+      const transaction = await processTransactionWithAI(text);
       await addTransactionForCurrentUser(transaction);
     } catch (error) {
       console.error("Error processing voice input:", error);

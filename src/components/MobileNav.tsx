@@ -2,15 +2,16 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, User, Settings, Plus, X, BarChart, ChartLine, ChartColumnBig, PenLine, Mic } from "lucide-react"
+import { Home, User, Settings, Plus, X, ChartColumnBig } from "lucide-react"
 import Link from "next/link"
 import AddDataWithMic from "@/app/dashboard/AddDataWithMic"
+import AddDataManually from "@/app/dashboard/AddDataManually"
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (
-    <div className="w-full absolute bottom-0 bg-red-200  ">
+    <div className="w-full absolute bottom-0">
       {/* Floating Menu Options */}
       <AnimatePresence>
         {isOpen && (
@@ -22,9 +23,7 @@ export function MobileNav() {
               transition={{ duration: 0.2, delay: 0.1 }}
               className="flex flex-col items-center"
             >
-              <button className="h-12 w-12 rounded-full bg-green-500 text-white flex items-center justify-center shadow-lg hover:bg-green-600">
-                <PenLine className="h-6 w-6" />
-              </button>
+              <AddDataManually/>
               <span className="text-xs m-2 text-muted-foreground">manual</span>
             </motion.div>
             <motion.div
