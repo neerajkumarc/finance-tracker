@@ -42,7 +42,7 @@ export function MobileNav() {
 
       {/* Navigation Bar */}
       <div className="">
-        <div className="relative flex items-center justify-between bg-white p-4 shadow-lg px-8">
+        <div className="relative flex items-center justify-between p-4 shadow-lg px-8">
           <Link
             href="/dashboard"
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary"
@@ -59,7 +59,7 @@ export function MobileNav() {
           {/* Center Plus Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="absolute -top-6 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full bg-black text-white shadow-lg transition-transform hover:scale-110"
+            className="absolute -top-6 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full shadow-lg bg-black text-white dark:bg-white dark:text-black transition-transform hover:scale-110"
           >
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
               {isOpen ? <X className="h-6 w-6" /> : <Plus className="h-6 w-6" />}
@@ -73,7 +73,7 @@ export function MobileNav() {
             <User className="h-6 w-6" />
           </Link>
           <Link
-            href="/settings"
+            href="/dashboard/settings"
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary"
           >
             <Settings className="h-6 w-6" />

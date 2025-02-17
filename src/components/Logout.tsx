@@ -1,6 +1,8 @@
 "use client";
 import { signout } from "@/actions/auth";
 import React, { useState } from "react";
+import { Button } from "./ui/button";
+import { LogOutIcon } from "lucide-react";
 
 const Logout = () => {
   const [loading, setLoading] = useState(false);
@@ -14,10 +16,11 @@ const Logout = () => {
 
   return (
     <div>
-      <form onSubmit={handleLogout} className=" flex items-center gap-2 bg-stone-900 text-white text-sm px-4 py-2 rounded-md cursor-pointer justify-center">
-        <button type="submit" disabled={loading}>
+      <form onSubmit={handleLogout}>
+        <Button type="submit" disabled={loading} className="w-full">
+          <LogOutIcon/>
           {loading ? "Signing out..." : "Sign out"}
-        </button>
+        </Button>
       </form>
     </div>
   );

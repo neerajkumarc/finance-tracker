@@ -41,11 +41,11 @@ const Transactions = ({ transactions }: Props) => {
 
   return (
     <div className="space-y-2">
-      <div className="flex justify-between items-center border-b">
+      <div className="flex justify-between items-center border-b border-neutral-700">
         <h2 className="text-base text-muted-foreground">transactions</h2>
       </div>
       <ScrollArea className="h-[300px]">
-        <div className={`${transactions.length !=0 && "divide-y divide-gray-100"}`}>
+        <div className={`${transactions.length !=0 && "divide-y divide-neutral-700"}`}>
           {isAdding && (
             <div className="p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">

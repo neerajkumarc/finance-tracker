@@ -5,7 +5,7 @@ const Metrics = ({ balance, expenses, income }: { balance: number, expenses: num
   return (
     <div className='space-y-4'>
       {/* Balance Card */}
-      <Card className="p-4 rounded-xl space-y-1">
+      <Card className="p-4 rounded-xl space-y-1 border-2 border-neutral-700">
         <div className="flex justify-between items-center">
           <span className="text-3xl">₹{balance.toFixed(0)}</span>
         </div>
@@ -14,7 +14,7 @@ const Metrics = ({ balance, expenses, income }: { balance: number, expenses: num
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-2 gap-4">
-        <Card className="p-4 rounded-2xl space-y-1">
+        <Card className="p-4 rounded-2xl space-y-1 border-2 border-neutral-700">
           <div className="flex items-center gap-2">
             <span className="flex justify-center items-center h-8 w-8 rounded-full bg-red-400/30">↗</span>
           </div>
@@ -24,7 +24,7 @@ const Metrics = ({ balance, expenses, income }: { balance: number, expenses: num
           </div>
         </Card>
 
-        <Card className="p-4 rounded-2xl space-y-1">
+        <Card className="p-4 rounded-2xl space-y-1 border-2 border-neutral-700">
           <div className="flex items-center gap-2">
             <span className="flex justify-center items-center h-8 w-8 rounded-full bg-green-400/30">↙</span>
           </div>

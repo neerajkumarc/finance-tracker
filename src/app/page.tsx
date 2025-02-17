@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getUserSession } from "@/actions/auth";
 import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import ModeToggle from "@/components/ModeToggle";
 
 export default async function Home() {
 const {user} = await getUserSession();
@@ -14,7 +16,7 @@ const {user} = await getUserSession();
           <img
             src="home.png"
             alt="Mibu app illustration"
-            className="w-48 h-48 object-contain"
+            className="w-48 h-48 object-contain dark:invert"
           />
         </div>
 
@@ -45,7 +47,7 @@ const {user} = await getUserSession();
         <p>your minimal finance tracker app</p>
       </div>
       <div className="mt-8 w-full">
-        <Link href="/dashboard"><button className="w-full bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-full">Get Started</button></Link>
+        <Link href="/dashboard"><Button  className="w-full rounded-full">Get Started</Button></Link>
       </div>
     </main>
   );
@@ -53,8 +55,8 @@ const {user} = await getUserSession();
 
 function CategoryPill({  label }: {  label: string }) {
   return (
-    <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-400 shadow-sm">
-      <span className="text-sm text-stone-900">{label}</span>
+    <div className="flex items-center gap-2 px-4 py-2   rounded-full border border-neutral-600 shadow-sm">
+      <span className="text-sm">{label}</span>
     </div>
   )
 }

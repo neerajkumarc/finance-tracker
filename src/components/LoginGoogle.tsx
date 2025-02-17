@@ -2,6 +2,7 @@
 
 import React, { useTransition } from "react";
 import { signInWithGoogle } from "@/actions/auth";
+import { Button } from "./ui/button";
 
 const LoginGoogle = () => {
   const [isPending, startTransition] = useTransition();
@@ -12,11 +13,11 @@ const LoginGoogle = () => {
     });
   };
   return (
-    <div
+    <Button
       onClick={handleGoogleLogin}
-      className="w-full gap-4 hover:cursor-pointer mt-6 bg-stone-900 rounded-md py-3 text-sm flex justify-center items-center"
+      className="w-full"
     >
-      <p className="text-white flex -gap-2 items-center">
+      <p className="flex gap-2 items-center">
         <svg
           className="mr-2 -ml-1 w-4 h-4"
           aria-hidden="true"
@@ -34,7 +35,7 @@ const LoginGoogle = () => {
         </svg>
         {isPending ? "Redirecting..." : "Sign in  with Google"}
       </p>
-    </div>
+    </Button>
   );
 };
 
