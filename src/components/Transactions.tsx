@@ -29,6 +29,7 @@ type Props = {
 const Transactions = ({ transactions }: Props) => {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [isPressed, setIsPressed] = useState(false);
 
   const { isAdding } = useAddingStore()
 
@@ -55,28 +56,36 @@ const Transactions = ({ transactions }: Props) => {
           </div>
           )}
           {transactions.map(transaction => (
-            <div key={transaction.id}>
-            <ContextMenu>
-              <ContextMenuTrigger>
-                <div className="p-4 flex items-center justify-between ">
-                  <div className="flex items-center gap-3">
-                    <span>{transaction.description}</span>
-                  </div>
-                  <span className={transaction.type === 'expense' ? 'text-red-400' : 'text-green-400'}>
-                    {transaction.type === 'expense' ? '-' : '+'}₹{transaction.amount.toFixed(2)}
-                  </span>
-                </div>
-              </ContextMenuTrigger>
-              <ContextMenuContent>
-                <ContextMenuItem onSelect={() => {
-                  setSelectedTransaction(transaction)
-                  setShowDeleteDialog(true)
-                }}>
-                  Delete
-                </ContextMenuItem>
-              </ContextMenuContent>
-            </ContextMenu>
-            </div>
+           <div key={transaction.id}>
+           <ContextMenu>
+             <ContextMenuTrigger>
+               <div
+                 className={`p-4 flex items-center justify-between select-none cursor-pointer ${
+                   isPressed ? 'bg-neutral-200' : ''
+                 }`}
+                 onTouchStart={() => setIsPressed(true)}
+                 onTouchEnd={() => setIsPressed(false)}
+               >
+                 <div className="flex items-center gap-3">
+                   <span>{transaction.description}</span>
+                 </div>
+                 <span className={transaction.type === 'expense' ? 'text-red-400' : 'text-green-400'}>
+                   {transaction.type === 'expense' ? '-' : '+'}₹{transaction.amount.toFixed(2)}
+                 </span>
+               </div>
+             </ContextMenuTrigger>
+             <ContextMenuContent>
+               <ContextMenuItem
+                 onSelect={() => {
+                   setSelectedTransaction(transaction);
+                   setShowDeleteDialog(true);
+                 }}
+               >
+                 Delete
+               </ContextMenuItem>
+             </ContextMenuContent>
+           </ContextMenu>
+         </div>
           ))}
           {transactions.length === 0 && (
             <div className='flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-20 w-full'>
