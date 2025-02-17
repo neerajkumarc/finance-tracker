@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-mono antialiased">
-        <div className="min-h-screen w-full bg-gray-50 sm:p-4">
+        <div className="min-h-screen flex md:block justify-center items-center w-full bg-gray-50 sm:p-4">
           {/* Mobile-first view (shows on all screens)*/}
           <div className="w-full sm:hidden">{children}</div>
 
