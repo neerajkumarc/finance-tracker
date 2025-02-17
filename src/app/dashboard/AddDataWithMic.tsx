@@ -57,7 +57,11 @@ const AddDataWithMic = () => {
       setIsAdding(true);
 
       const transaction = await processTransactionWithAI(text);
-      await addTransactionForCurrentUser(transaction);
+      if(transaction.amount == 0){
+        setShowShakeAnimation(true)
+      }else{
+        await addTransactionForCurrentUser(transaction);
+      }
     } catch (error) {
       console.error("Error processing voice input:", error);
       setShowShakeAnimation(true);
