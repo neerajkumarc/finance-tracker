@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="space-y-4 h-screen sm:h-full relative md:py-8 py-6">
+    <div className="space-y-4 h-screen sm:h-full relative md:py-8 py-6 lowercase">
       {children}
       <MobileNav />
     </div>

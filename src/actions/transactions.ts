@@ -1,8 +1,14 @@
 "use server";
 
-import { addTransaction, deleteTransaction } from "@/utils/supabase/queries";
+import { addTransaction, deleteTransaction, fetchTransactions } from "@/utils/supabase/queries";
 import { getUserSession } from "./auth";
 import {Transaction, TransactionData } from "@/types";
+
+export async function getTransactionsForCurrentUser() { 
+  const { user } = await getUserSession();
+  if (!user) return;
+  return fetchTransactions(user.id); 
+}
 
 export async function addTransactionForCurrentUser(transaction:TransactionData) {
   const { user } = await getUserSession();

@@ -50,7 +50,7 @@ export function MobileNav() {
             <Home className="h-6 w-6" />
           </Link>
           <Link
-            href="/graph"
+            href="/dashboard/graph"
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary mr-8"
           >
             <ChartColumnBig className="h-6 w-6" />
@@ -67,7 +67,7 @@ export function MobileNav() {
           </button>
 
           <Link
-            href="/profile"
+            href="/dashboard/profile"
             className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary"
           >
             <User className="h-6 w-6" />
