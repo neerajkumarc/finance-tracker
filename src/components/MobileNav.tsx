@@ -1,14 +1,25 @@
 "use client"
-
-import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, User, Settings, Plus, X, ChartColumnBig } from "lucide-react"
-import Link from "next/link"
-import AddDataWithMic from "@/app/dashboard/AddDataWithMic"
+import { Home, Settings, Plus, X, ChartColumnBig, Download } from "lucide-react"
+import { exportTransactions } from "@/lib/indexedDB"
 import AddDataManually from "@/app/dashboard/AddDataManually"
+import AddDataWithMic from "@/app/dashboard/AddDataWithMic"
+import Link from "next/link"
+import { useFloatingMenuStore } from "@/store/useToggleFloatingMenu"
+import { usePathname } from 'next/navigation'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 export function MobileNav() {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const {isOpen, setIsOpen} = useFloatingMenuStore();
+  const pathname = usePathname();
 
   return (
     <div className="w-full absolute bottom-0">
@@ -45,13 +56,17 @@ export function MobileNav() {
         <div className="relative flex items-center justify-between p-4 shadow-lg px-8">
           <Link
             href="/dashboard"
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary"
+            className={`flex flex-col items-center gap-1 transition-colors hover:text-primary ${
+              pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground'
+            }`}
           >
             <Home className="h-6 w-6" />
           </Link>
           <Link
             href="/dashboard/graph"
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary mr-8"
+            className={`flex flex-col items-center gap-1 transition-colors hover:text-primary mr-8 ${
+              pathname === '/dashboard/graph' ? 'text-primary' : 'text-muted-foreground'
+            }`}
           >
             <ChartColumnBig className="h-6 w-6" />
           </Link>
@@ -66,15 +81,34 @@ export function MobileNav() {
             </motion.div>
           </button>
 
-          <Link
-            href="/dashboard/profile"
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary"
-          >
-            <User className="h-6 w-6" />
-          </Link>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary">
+                <Download className="h-6 w-6" />
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Export Transactions</DialogTitle>
+                <DialogDescription>
+                  Download your transactions as a CSV file
+                </DialogDescription>
+              </DialogHeader>
+              <Button 
+                onClick={async () => {
+                  await exportTransactions();
+                }}
+              >
+                Download CSV
+              </Button>
+            </DialogContent>
+          </Dialog>
+
           <Link
             href="/dashboard/settings"
-            className="flex flex-col items-center gap-1 text-muted-foreground transition-colors hover:text-primary"
+            className={`flex flex-col items-center gap-1 transition-colors hover:text-primary ${
+              pathname === '/dashboard/settings' ? 'text-primary' : 'text-muted-foreground'
+            }`}
           >
             <Settings className="h-6 w-6" />
           </Link>
@@ -83,4 +117,3 @@ export function MobileNav() {
     </div>
   )
 }
-

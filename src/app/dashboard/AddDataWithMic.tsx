@@ -1,17 +1,23 @@
 "use client";
-import { addTransactionForCurrentUser } from "@/actions/transactions";
 import { Button } from "@/components/ui/button";
 import { useAddingStore } from "@/store/useAddingStore";
 import { Mic, MicOff } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
 import { processTransactionWithAI } from "@/utils/transactionAI";
+import { useRouter } from "next/navigation";
+import { useTransactionStore } from "@/store/useTransactionStore";
+import { useFloatingMenuStore } from "@/store/useToggleFloatingMenu";
 
 const AddDataWithMic = () => {
+  const router = useRouter();
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showShakeAnimation, setShowShakeAnimation] = useState<boolean>(false);
   const { setIsAdding } = useAddingStore();
+
+  const { addNewTransaction } = useTransactionStore();
+  const { setIsOpen } = useFloatingMenuStore();
 
   // Reset shake animation after it plays
   useEffect(() => {
@@ -57,10 +63,12 @@ const AddDataWithMic = () => {
       setIsAdding(true);
 
       const transaction = await processTransactionWithAI(text);
-      if(transaction.amount == 0){
-        setShowShakeAnimation(true)
-      }else{
-        await addTransactionForCurrentUser(transaction);
+      if (transaction.amount == 0) {
+        setShowShakeAnimation(true);
+      } else {
+        await addNewTransaction(transaction);
+        setIsOpen(false);
+        router.refresh();
       }
     } catch (error) {
       console.error("Error processing voice input:", error);

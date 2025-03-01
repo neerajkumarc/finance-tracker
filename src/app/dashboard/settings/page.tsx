@@ -1,8 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import ModeToggle from "@/components/ModeToggle";
-import Logout from "@/components/Logout";
 
 const SettingsPage = () => {
   return (
@@ -67,10 +65,7 @@ const SettingsPage = () => {
         </Link>
       </div> */}
 
-      {/* Account Actions */}
-      <div className="pt-6">
-        <Logout />
-      </div>
+
     </div>
   );
 };
