@@ -1,6 +1,6 @@
 import { TransactionData } from "@/types";
 
-export async function processTransactionWithAI(input: string): Promise<TransactionData> {
+export async function processTransactionWithAI(input: string): Promise<Omit<TransactionData, "id" | "created_at">> {
   const systemPrompt = `You are a financial assistant. Parse the following text and return a JSON object with these fields:
     - type: either "expense" or "income"
     - amount: a number (parse any mentioned amount)
