@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { addTransactionForCurrentUser } from "@/actions/transactions";
 import { Button } from "@/components/ui/button";
 import { useAddingStore } from "@/store/useAddingStore";
 import { TransactionData } from "@/types";
@@ -29,6 +28,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { addTransaction } from "@/lib/indexedDB";
+import { useTransactionStore } from "@/store/useTransactionStore";
+import { useFloatingMenuStore } from "@/store/useToggleFloatingMenu";
 
 const COMMON_EMOJIS = {
   expense: ["💸", "🛒", "🍔", "🚗", "🏠", "💊", "📱", "🎮", "✈️", "🎫"],
@@ -45,6 +47,9 @@ const AddDataManually = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { setIsAdding } = useAddingStore();
+
+  const { addNewTransaction } = useTransactionStore();
+  const { setIsOpen: setIsFloatingMenuOpen } = useFloatingMenuStore();
 
   const handleAIToggle = (enabled: boolean) => {
     setIsAIMode(enabled);
@@ -75,13 +80,13 @@ const AddDataManually = () => {
   const processManualInput = async () => {
     if (!validateManualInput()) return false;
 
-    const transaction: TransactionData = {
+    const transaction: Omit<TransactionData, "id" | "created_at"> = {
       type,
       amount: Number(amount),
       description: `${selectedEmoji} ${description}`,
     };
 
-    await addTransactionForCurrentUser(transaction);
+    await addNewTransaction(transaction);
     return true;
   };
 
@@ -93,16 +98,20 @@ const AddDataManually = () => {
 
     try {
       const aiResult = await processTransactionWithAI(description);
-      
+
       if (!aiResult || aiResult.amount === 0) {
-        setError("Unable to process the transaction description. Please be more specific or try manual mode.");
+        setError(
+          "Unable to process the transaction description. Please be more specific or try manual mode."
+        );
         return false;
       }
 
-      await addTransactionForCurrentUser(aiResult);
+      await addNewTransaction(aiResult);
       return true;
     } catch (err) {
-      setError("Failed to process the transaction. Please try again or use manual mode.");
+      setError(
+        "Failed to process the transaction. Please try again or use manual mode."
+      );
       return false;
     }
   };
@@ -110,16 +119,19 @@ const AddDataManually = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
+
     try {
       setIsProcessing(true);
       setIsAdding(true);
 
-      const success = await (isAIMode ? processAIInput() : processManualInput());
-      
+      const success = await (isAIMode
+        ? processAIInput()
+        : processManualInput());
+
       if (success) {
         resetForm();
         setIsOpen(false); // Close dialog on success
+        setIsFloatingMenuOpen(false); // Close floating menu on success
       }
     } catch (error) {
       console.error("Error adding transaction:", error);
@@ -153,10 +165,7 @@ const AddDataManually = () => {
           <DialogTitle>Add Transaction</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2 mt-4">
-          <Switch
-            checked={isAIMode}
-            onCheckedChange={handleAIToggle}
-          />
+          <Switch checked={isAIMode} onCheckedChange={handleAIToggle} />
           <Label className="flex items-center space-x-2">
             <Wand2 className="w-4 h-4" />
             <span>AI Mode</span>
@@ -167,10 +176,7 @@ const AddDataManually = () => {
             <>
               <div className="space-y-2">
                 <Label>Type</Label>
-                <Select
-                  value={type}
-                  onValueChange={handleTypeChange}
-                >
+                <Select value={type} onValueChange={handleTypeChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
@@ -234,22 +240,18 @@ const AddDataManually = () => {
                 setDescription(e.target.value);
                 setError(null);
               }}
-              placeholder={isAIMode ? "e.g., spent 500 on lunch" : "Enter description"}
+              placeholder={
+                isAIMode ? "e.g., spent 500 on lunch" : "Enter description"
+              }
               required
             />
           </div>
 
           {error && (
-            <div className="text-sm text-red-500 font-medium">
-              {error}
-            </div>
+            <div className="text-sm text-red-500 font-medium">{error}</div>
           )}
 
-          <Button 
-            type="submit" 
-            className="w-full"
-            disabled={isProcessing}
-          >
+          <Button type="submit" className="w-full" disabled={isProcessing}>
             {isProcessing ? "Processing..." : "Add Transaction"}
           </Button>
         </form>
