@@ -1,7 +1,7 @@
 "use client"
 import { motion, AnimatePresence } from "framer-motion"
 import { Home, Settings, Plus, X, ChartColumnBig, Download } from "lucide-react"
-import { exportTransactions } from "@/lib/indexedDB"
+import { exportTransactions, importTransactions } from "@/lib/indexedDB"
 import AddDataManually from "@/app/dashboard/AddDataManually"
 import AddDataWithMic from "@/app/dashboard/AddDataWithMic"
 import Link from "next/link"
@@ -89,18 +89,45 @@ export function MobileNav() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Export Transactions</DialogTitle>
+                <DialogTitle>Import/Export Transactions</DialogTitle>
                 <DialogDescription>
-                  Download your transactions as a CSV file
+                  Download your transactions as a CSV file or import them from a CSV file
                 </DialogDescription>
               </DialogHeader>
-              <Button 
-                onClick={async () => {
-                  await exportTransactions();
-                }}
-              >
-                Download CSV
-              </Button>
+              <div className="flex flex-col gap-2">
+                <Button 
+                  onClick={async () => {
+                    await exportTransactions();
+                  }}
+                >
+                  Download CSV
+                </Button>
+                <Button 
+                  onClick={() => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.csv';
+                    input.onchange = async (e) => {
+                      const file = (e.target as HTMLInputElement).files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = async (e) => {
+                          const csv = e.target?.result as string;
+                          await importTransactions(csv);
+                          //refresh the ui
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 500);
+                        };
+                        reader.readAsText(file);
+                      }
+                    };
+                    input.click();
+                  }}
+                >
+                  Import CSV
+                </Button> 
+              </div>
             </DialogContent>
           </Dialog>
 
